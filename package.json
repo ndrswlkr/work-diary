@@ -1,0 +1,26 @@
+{
+  "name": "work-diary",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "nodemon server.js server",
+    "whole": "concurrently \"npm run dev\" \"npm run server\""
+  },
+  "dependencies": {
+    "@mojojs/core": "^1.26.0",
+    "@picocss/pico": "^2.0.0-alpha1",
+    "@solidjs/router": "^0.9.1",
+    "ofetch": "^1.3.3",
+    "solid-js": "^1.7.8"
+  },
+  "devDependencies": {
+    "vite": "^4.4.5",
+    "vite-plugin-pwa": "^0.16.7",
+    "vite-plugin-solid": "^2.7.0",
+    "vite-plugin-solid-svg": "^0.7.0"
+  }
+}

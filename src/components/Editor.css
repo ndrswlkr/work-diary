@@ -1,0 +1,9 @@
+.editor-buttons-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+#editor header, #editor section{
+    margin-bottom: 1rem;
+}

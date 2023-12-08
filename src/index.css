@@ -1,4 +1,14 @@
-:root {
+:root{
+  --pico-font-size: 90%;
+  overflow-y: scroll;
+  --signal-red: #e53935;
+}
+
+
+
+
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -67,3 +77,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+ */

@@ -1,0 +1,76 @@
+
+circle{
+  fill: transparent;
+}
+
+svg {
+  transform: rotate(-90deg);
+  background: transparent;
+  border-radius: 50%;
+}
+
+div.grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+}
+
+@media (min-width: 500px) {
+  div.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+
+  }
+
+  div.grid svg {
+    justify-self: right;
+    align-self: center;
+  }
+
+  .chart-caption{
+    display: grid;
+    justify-self: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  div.chart-caption h2{
+    margin-bottom: 0;
+    display: inline-block;
+    justify-self: left;
+    align-self: center;
+  }
+  
+}
+
+div.grid svg {
+  justify-self: center;
+  align-self: center;
+}
+
+.chart-caption{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+div.chart-caption h2{
+  margin-bottom: 0;
+  display: inline-block;
+  justify-self: left;
+  align-self: center;
+}
+
+.color-indicator{
+  display: inline-block;
+  justify-self: right;
+  align-self: center;
+  width: 2rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
+.all-caption{
+  display: grid;
+  align-content: space-around;
+}

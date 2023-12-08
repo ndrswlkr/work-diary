@@ -1,0 +1,58 @@
+
+nav {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 0.7rem;
+    background-color: var(--pico-card-background-color);
+    padding-left: 12px;
+    padding-right: 12px;
+    
+  }
+
+#mobile-inner-menu{
+    width: 50vw;
+}
+
+#brand-text {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    /*mix-blend-mode: difference; */
+    font-size: x-large;
+  }
+#brand-symbol{
+    font-size: x-large;
+    margin-right: 1rem;
+}  
+@media (width < 500px){
+    nav li {
+        padding: 4px;
+        padding-bottom: 8px;
+    }
+    .container-fluid{
+        padding-top: 4px;
+        padding-inline: 8px;
+    }
+    #menu{
+        display: none;
+    }
+    #mobile-menu{
+        display: inline;
+        z-index: -1;
+    }
+}
+
+@media (width > 500px){
+    #brand-text, #brand-symbol{
+        font-size: 32px;
+    }
+    #menu{
+        display: inline;
+    }
+    #mobile-menu{
+        display: none;
+    }
+}

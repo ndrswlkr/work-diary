@@ -1,57 +1,61 @@
-import { createSignal, onMount, createMemo, on } from 'solid-js'
+import { createSignal, onMount, createEffect, useContext } from 'solid-js'
 import { Routes, Route, useNavigate, useLocation } from '@solidjs/router'
 import { ofetch } from 'ofetch'
+import { DiaryContext } from './components/DiaryContext.jsx'
 import Toast from './components/toast'
 import Diary from './pages/Diary'
 import About from './pages/About'
-import './App.css'
 import Login from './pages/Login'
-import Digging from './assets/person-digging-solid.svg?component-solid'; 
+import Register from './pages/Register'
+import './App.css'
+import Nav from './components/Nav'
+import Reports from './pages/Reports.jsx'
+//store
+
 
 async function checkAuthentication () {
   const res = await ofetch('/api/is-authenticated')
-  console.log(`checking ... ${res.authenticated}`)
   return res.authenticated
 }
 
+
 function App () {
-  const [count, setCount] = createSignal(0)
-  const [name, setName] = createSignal({})
+  const {setToastMessage,authenticated, setAuthenticated} = useContext(DiaryContext)
   const navigate = useNavigate()
   const location = useLocation()
 
-  createMemo( async () => {
+  createEffect(async () => {
     const loc = location.pathname
-    if (! await checkAuthentication()){
-      console.log('not authenticated')
-      dispatchEvent(new CustomEvent('toast', { detail: 'not authenticated' }))
-      navigate('/login', {replace: true})
+    if (await checkAuthentication()) {
+      setAuthenticated(true)
+    } else {
+      setAuthenticated(false)
     }
-  
+    if (authenticated() || loc == '/register' || loc == '/login') {
+      return
+    } else {
+      setToastMessage({show: true, title: 'warning', message: 'not authenticated'})
+      navigate('/login', { replace: true })
+    }
   })
 
-  onMount(async () => {
-    window.onfocus =async event => {
-      //if (event.explicitOriginalTarget === window)
-     
-    }
+   onMount(async () => {
 
-    const data = await ofetch('/api/test')
-    //dispatchEvent(new CustomEvent('toast', { detail: 'hello' }))
-
-    setName(data)
-  })
+    //window.onfocus = async event => {
+    //if (event.explicitOriginalTarget === window)
+    //}
+  }) 
   return (
     <>
-    <Digging class='icon' />
-    <Routes>
-      <Route path='/diary' component={Diary} />
-      <Route path='/about' component={About} />
-      <Route path='/login' component={Login} />
-    </Routes>
+      <Nav />
+      <Routes>
+        <Route path='/diary' component={Diary} />
+        <Route path='/reports' component={Reports} />
+        <Route path='/about' component={About} />
+        <Route path='/login' component={Login} />
+        <Route path='/register' component={Register} />
+      </Routes>
       <div class='container'>
-        <h2>{name().name}</h2>
-        <h2>{name().lastName}</h2>
         <Toast></Toast>
       </div>
     </>

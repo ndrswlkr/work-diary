@@ -1,0 +1,20 @@
+.float{
+    display: inline-flex;
+    align-items: center; 
+	position:fixed;
+	aspect-ratio: 1/1;
+	bottom:57px;
+	right:40px;
+    border-radius: 50%;
+    border-style: none;
+    z-index: 1;
+    font-size: 4rem;
+    line-height: 0%;
+    font-weight: 900;
+    background-color: transparent;
+    color: var(--pico-primary-background)
+    
+}
+button.float:active{
+    border: none;
+}

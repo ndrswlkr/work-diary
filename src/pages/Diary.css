@@ -1,0 +1,92 @@
+.busy{
+    margin-top: 30vh;
+}
+
+.diary-section{
+    margin-top: 1rem;
+}
+
+.diary-element{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    gap: 1rem;
+    margin: 0rem 0rem 1rem 0rem;
+    padding: .5rem;
+}
+
+.edit-button{
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+
+    
+    aspect-ratio: 1/1;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    border: none;
+    background-color: transparent;
+    color: var(--pico-primary-background);
+    font-size: large;
+}
+
+
+
+.diary-image{
+    margin: 0;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 4;
+    grid-column-end: 7;
+    justify-self: center;
+    align-self: center;
+    overflow: hidden;
+}
+
+img.diary-image{
+    width: 30vw;
+    
+    object-fit: cover;
+}
+.diary-done{
+    justify-self: center;
+    align-self: center;
+    margin: 0;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.diary-work{
+    text-align: left;
+    white-space: pre-wrap;
+    margin: 0;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.diary-date{
+    justify-self:end;
+    align-self: center;
+    margin: 0;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.diary-duration{
+    justify-self: end;
+    align-self: center;
+    margin: 0;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+

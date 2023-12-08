@@ -1,16 +1,18 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
 import { Router } from '@solidjs/router'
-import pico from '@picocss/pico'
+import '@picocss/pico'
 import './index.css'
 import App from './App'
-
+import { DiaryContextProvider } from './components/DiaryContext'
 const root = document.getElementById('root')
 
 render(
   () => (
     <Router>
-      <App />
+      <DiaryContextProvider>
+        <App />
+      </DiaryContextProvider>
     </Router>
   ),
   root

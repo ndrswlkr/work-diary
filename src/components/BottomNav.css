@@ -1,0 +1,29 @@
+.bottom-nav {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    align-content: space-around;
+    padding-inline: .3rem;
+    bottom: 0%;
+    width: 100%;
+    left: 0;
+    z-index: 3;
+    background-color: var(--pico-secondary-background);
+  }
+  
+  .bottom-nav p {
+    color:white;
+  }
+  
+  .bottom-nav select{
+    margin-top: .3rem;
+    margin-bottom: .3rem;
+  }
+  
+  .bottom-nav fieldset{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    margin-top: 1rem;
+  }

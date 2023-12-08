@@ -2,7 +2,11 @@
  function About() {
 
     return (
-        <div>About</div>
+        <div>About
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt voluptatem aperiam ratione numquam error, soluta aliquid laudantium enim illo nulla sapiente magnam porro officiis odio suscipit culpa asperiores molestiae id? Quos dolore temporibus in natus quia magni quasi voluptatum ipsa. Iusto quibusdam, saepe vero accusantium molestiae, quis praesentium commodi veniam magni impedit tempora obcaecati dignissimos deserunt ipsum explicabo non iste aut. Officiis, amet. Veniam cupiditate, maiores autem hic rerum repudiandae quisquam ab ad tenetur, doloremque itaque doloribus molestiae quos! Eveniet est eos repellendus rerum, sint vel debitis, quis quasi saepe dolorum quidem nesciunt tempore quo nobis, possimus dolor esse cum? Eligendi, sint, error ea animi voluptatum et, non corrupti ad exercitationem tenetur possimus impedit. Atque eum totam alias veritatis facere sed maxime possimus amet. Laudantium temporibus ea magnam, sequi quasi hic pariatur tempore dolore nisi sint doloribus vitae natus eum. Sequi quasi, necessitatibus magni tempora ratione, animi minima iste libero odio recusandae, mollitia in provident amet omnis ducimus beatae expedita enim impedit natus adipisci dolorem. Corporis libero illum magnam exercitationem nobis nisi beatae doloribus? Asperiores sapiente earum nesciunt eum sint tempora libero hic soluta expedita natus consequatur quod laborum impedit delectus, repellendus, explicabo molestias? Laudantium, vitae, adipisci, quam at quis eveniet voluptates dolorem fuga vero quia praesentium animi fugit totam rem quae cumque beatae accusantium maiores explicabo. Quas dolore veritatis sint, molestiae fugit exercitationem est sed ullam quaerat harum, nam earum. Consequatur architecto quae doloremque. Delectus minus doloribus ipsa dignissimos ullam doloremque distinctio sint blanditiis laboriosam autem provident ratione aut reprehenderit, architecto fugiat consequuntur veniam dolore. Debitis, nisi sed, explicabo maiores similique sit vel, cupiditate non aperiam omnis dolore. Consequatur molestiae, ullam cupiditate ab quis corporis nisi nesciunt quam, necessitatibus itaque accusantium provident dolor libero odit sint pariatur vel! Illum cumque consectetur doloremque earum ipsam dolores non sint voluptatem ea.
+            </p>
+        </div>
     );
 }
     export default About;

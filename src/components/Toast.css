@@ -2,7 +2,7 @@
     position: fixed;
     display: grid;
     justify-content: center;
-    bottom: 12%;
+    bottom: 120%;
     left: 25%;
     width: 50%;
     z-index: 2;
@@ -20,6 +20,7 @@
   }
   
   #toast[open="true"] {
-    opacity: 50%;
+    bottom: 12%;
+    opacity: 100%;
   }
   

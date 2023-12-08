@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import solid from 'vite-plugin-solid'
-import solidSvg from 'vite-plugin-solid-svg'
 
 export default defineConfig({
   //base: './',
@@ -12,7 +11,7 @@ export default defineConfig({
       }
     }
   },
-  plugins: [solid(), solidSvg(), VitePWA({
+  plugins: [solid(),  VitePWA({
     registerType: 'autoUpdate',
     workbox: {
       cleanupOutdatedCaches: true,

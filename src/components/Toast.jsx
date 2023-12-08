@@ -1,30 +1,30 @@
-import { onMount, onCleanup, createSignal, Show } from 'solid-js'
 import './Toast.css'
-
+import { createEffect, useContext } from 'solid-js'
+import { DiaryContext } from './DiaryContext'
 
 function Toast () {
-  const [show, setShow] = createSignal(false)
-  const [message, setMessage] = createSignal("message")
-  
-  const showToast = (msg) => {
-    setShow(true)
-    setMessage(msg)
-    setTimeout(() => setShow(false), 3000)
-  }
-
-  onMount(() => {
-    addEventListener('toast', event => showToast(event.detail))
+  const {toastMessage, setToastMessage} = useContext(DiaryContext)
+  createEffect(() => {
+    if (toastMessage().show) {
+      setTimeout(
+        () =>
+          setToastMessage(msg => {
+            return {
+              title: msg.title,
+              message: msg.message,
+              show: false
+            }
+          }),
+        3000
+      )
+    }
   })
 
-  onCleanup(() => removeEventListener('toast', event => showToast(event.detail)))
-
   return (
-   
-      <div id='toast' attr:open={show()}>
-        <h3>toast</h3>
-        <p>{message()}</p>
-      </div>
-    
+    <div id='toast' attr:open={toastMessage().show}>
+      <h3>{toastMessage().title}</h3>
+      <p>{toastMessage().message}</p>
+    </div>
   )
 }
 export default Toast

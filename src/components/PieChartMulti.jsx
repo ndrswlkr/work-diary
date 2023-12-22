@@ -1,53 +1,64 @@
-import { For, mergeProps, onMount } from 'solid-js'
+import { For, createEffect, createSignal, mergeProps, onMount } from 'solid-js'
 import './PieChart.css'
 
 function PieChartMulti (props) {
   props = mergeProps(
-    { size: 100, colors: ['#655', 'orange', 'red', 'limegreen'], values: [50] },
+    {
+      size: 100,
+      colors: ['green', 'lightgreen', 'orange', 'yellow', 'red', 'hotpink'],
+      values: [50],
+      captions: [1, 2, 3, 4, 5]
+    },
     props
   )
-  const radius = props.size / 2
-  const circum = radius * Math.PI
-  const values = props.values.map(v => (circum / 100) * v)
-  const total = props.values.reduce( (prev, val) => prev + val, 0 )
-  console.log('TOTTAL',   total)
-  const dur = (1600 / 100) * total
-  let circle = []
 
-  function calcOffset (index, value = 0) {
+  const radius = () => props.size / 2
+  const circum = () => radius() * Math.PI
+  const values = () => props.values.map(v => (circum() / 100) * v)
+  const total = () => props.values.reduce((prev, val) => prev + val, 0)
+  const dur = () => (2600 / 100) * total()
+  const getVal = index => {
+    return values()[index]
+  }
+
+  const calcOffset = (index, value = 0) => {
     if (index >= 0) {
-      return calcOffset(index - 1, value + values[index])
+      return calcOffset(index - 1, value + values()[index])
     }
     return value + 0
   }
 
-  onMount(() => {
-    circle.forEach(async (myCircle, index) => {
-      myCircle.setAttribute('stroke', props.colors[index + 1])
-      
-      const animation = myCircle.animate(
-        [
-          {
-            // from
-            strokeDasharray: `0, ${circum}`,
-            strokeDashoffset: 0
-          },
-          {
-            // to
-            strokeDashoffset: -calcOffset(index - 1),
-            strokeDasharray: `${values[index]}, ${circum}`
-          }
-        ],
-        { duration: dur, iterations: 1, fill: 'forwards' }
-      )
-      // Wait for the animation to finish
-         await animation.finished
-      // Commit animation state to style attribute
-      animation.commitStyles()
-      // Cancel the animation
-      animation.cancel() 
-      //console.log(animation)
-    })
+  let circle = []
+
+  createEffect(() => {
+    if (getVal(0) >= 0) {
+      circle.forEach(async (myCircle, index) => {
+        myCircle.setAttribute('stroke', props.colors[index + 1])
+        console.log("ANIMATION CREATED")
+        const animation = myCircle.animate(
+          [
+            {
+              // from
+              strokeDasharray: `0, ${circum()}`,
+              strokeDashoffset: 0
+            },
+            {
+              // to
+              strokeDashoffset: -calcOffset(index - 1),
+              strokeDasharray: `${getVal(index)}, ${circum()}`
+            }
+          ],
+          { duration: dur(), iterations: 1, fill: 'forwards', delay: 900 }
+        )
+        // Wait for the animation to finish
+        await animation.finished
+        // Commit animation state to style attribute
+        animation.commitStyles()
+        // Cancel the animation
+        animation.cancel()
+        //console.log(animation)
+      })
+    }
   })
   return (
     <>
@@ -76,18 +87,22 @@ function PieChartMulti (props) {
             )}
           </For>
         </svg>
-        <div class='all-caption'>
+        <div class='caption'>
           <For each={props.values}>
             {(val, index) => (
-              <div class='chart-caption'>
+              <>
                 <div
                   class='color-indicator'
                   style={{ 'background-color': props.colors[index() + 1] }}
                 >
                   {' '}
                 </div>
-                <h2>{val}%</h2>
-              </div>
+
+                <span>
+                  {props.captions[index()]}
+                </span>
+                <span> ({val.toFixed(2)}%)</span>
+              </>
             )}
           </For>
         </div>

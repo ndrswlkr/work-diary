@@ -9,7 +9,7 @@ const checkPermission = () =>{
 }
 
 const registerSW = async () =>{
-    const registration = await navigator.serviceWorker.register("/pwa-example/serviceworker.js")
+    const registration = await navigator.serviceWorker.register("/workout-timer/serviceworker.js")
     return registration
 }
 
@@ -26,11 +26,6 @@ const main = async () => {
     checkPermission()
     const reg = await registerSW()
     requestNotificationPermission()
-    window.addEventListener("boom", evt => {
-        setTimeout(() =>    {
-
-            reg.showNotification("yo o o  fo realllll " + evt )
-        }, 7000)
-    })
+  
 }
 

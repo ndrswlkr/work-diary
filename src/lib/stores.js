@@ -1,0 +1,67 @@
+import { createSignal } from 'solid-js'
+import localforage from 'localforage'
+localforage.config({
+  name: 'work-diary'
+})
+
+/* localforage
+  .ready()
+  .then(function () {
+    // This code runs once localforage
+    // has fully initialized the selected driver.
+    console.log(localforage.supports(localforage.INDEXEDDB))
+    localforage.setDriver([localforage.WEBSQL, localforage.INDEXEDDB])
+    console.log(localforage.driver()) // localforage
+  })
+  .catch(function (e) {
+    console.log(e) // `No available storage method found.`
+    // One of the cases that `ready()` rejects,
+    // is when no usable storage driver is found
+  }) */
+
+export const [diary, setDiary] = createSignal([])
+
+export function loadDiary () {
+  localforage
+    .getItem('diary')
+    .then(data => {
+      console.log(data)
+      if (data) {
+        setDiary(JSON.parse(data))
+      }
+    })
+    .catch(e => console.log(e))
+}
+
+export function saveDiary () {
+  let data = JSON.stringify(diary())
+  localforage.setItem('diary', data).catch(e => console.log(e))
+}
+
+export const exportDiary = () => {
+  let data =
+    'data:text/json;charset=utf-8,' +
+    encodeURIComponent(JSON.stringify(diary()))
+  let element = document.createElement('a')
+  element.setAttribute('href', data)
+  element.setAttribute('download', 'diary-export.json')
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+
+  document.body.removeChild(element)
+}
+
+export const importDiary = file => {
+  console.log('importing diary data', file)
+  let fr = new FileReader()
+  let diaryData
+  fr.onload = e => {
+    diaryData = JSON.parse(e.target.result)
+    setDiary(diaryData)
+    saveDiary()
+  }
+
+  fr.readAsText(file)
+}

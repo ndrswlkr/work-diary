@@ -1,0 +1,25 @@
+
+.float {
+    display: inline-flex;
+    align-items: center;
+    position: fixed;
+    aspect-ratio: 1/1;
+    bottom: 57px;
+    right: 40px;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 4px;
+    z-index: 1;
+  }
+  
+@keyframes buzz {
+    0% {border-width: 4px;}
+    50% {border-width: 8px;}
+    100% {border-width: 4px;}
+  }
+  
+  /* The element to apply the animation to */
+  #floating-button[buzz="true"] {
+    animation-name: buzz;
+    animation-duration: .5s;
+  }

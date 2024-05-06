@@ -15,44 +15,44 @@ export default defineConfig({
 
       },
       manifest: {
-        name: 'workout timer',
-        short_name: 'wt',
-        description: 'timing your workouts',
+        name: 'work diary',
+        short_name: 'workdiary',
+        description: 'note your worktimes',
         "icons": [
           {
-            "src": "/workout-timer/pwa-192x192.png",
+            "src": "/work-diary/pwa-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/workout-timer/pwa-512x512.png",
+            "src": "/work-diary/pwa-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/workout-timer/pwa-maskable-192x192.png",
+            "src": "/work-diary/pwa-maskable-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
           },
           {
-            "src": "/workout-timer/pwa-maskable-512x512.png",
+            "src": "/work-diary/pwa-maskable-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
           }
         ],
-        "start_url": "/workout-timer/index.html",
+        "start_url": "/work-diary/index.html",
         "display": "standalone",
         "background_color": "#FFFFFF",
         "theme_color": "#FFFFFF",
-        scope: '/workout-timer/',
+        scope: '/work-diary/',
       }
     })
   ],
-  base: '/workout-timer',
+  base: '/work-diary',
   build:{
     target: 'esnext',
     outDir: 'docs'

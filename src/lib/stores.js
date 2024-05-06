@@ -1,5 +1,7 @@
 import { createSignal } from 'solid-js'
 import localforage from 'localforage'
+import { toastMessage, setToastMessage } from './globals'
+
 localforage.config({
   name: 'work-diary'
 })
@@ -56,11 +58,21 @@ export const exportDiary = () => {
 export const importDiary = file => {
   console.log('importing diary data', file)
   let fr = new FileReader()
-  let diaryData
   fr.onload = e => {
-    diaryData = JSON.parse(e.target.result)
-    setDiary(diaryData)
-    saveDiary()
+    try{
+
+        let diaryData = JSON.parse(e.target.result)
+        setDiary(diaryData)
+        saveDiary()
+    }
+    catch(e) {
+        setToastMessage({show:true, title: "error importing file", message: file.name+ " " + e})
+    }
+  }
+
+  fr.onerror = e => {
+    console.log(e)
+    setToastMessage({show: true, title: "error", message:"error importing diary data"})
   }
 
   fr.readAsText(file)

@@ -12,7 +12,8 @@ let menu
 let fileInput
 
 function Menu (props) {
-  const { showMenu, setShowMenu } = useContext(DiaryContext)
+  const { showMenu, setShowMenu, showReport, setShowReport } =
+    useContext(DiaryContext)
 
   const handleClick = event => {
     if (!showMenu()) return
@@ -39,6 +40,14 @@ function Menu (props) {
             <i class='fa-solid fa-circle-xmark'></i>
           </button>
         </header>
+        <button
+          onClick={() => {
+            setShowReport(true)
+            setShowMenu(false)
+          }}
+        >
+          generate Report
+        </button>
         <h6>export Data</h6>
         <p>
           exports current data to your device

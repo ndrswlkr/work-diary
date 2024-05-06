@@ -4,16 +4,16 @@ import {
   createSignal,
   createEffect,
   For,
-  useContext
+  useContext,
+  on
 } from 'solid-js'
 import { epoc_date, standard_date } from '../lib/diary_functions'
-import { categorys } from '../lib/data'
 import { diary } from '../lib/stores'
 import { DiaryContext } from '../DiaryContext'
 let editor
 
 function Editor (props) {
-  const { showEditor, setShowEditor, openToEdit, setOpenToEdit } =
+  const { showEditor, setShowEditor, openToEdit, setOpenToEdit, categorys } =
     useContext(DiaryContext)
 
   const handleClick = event => {
@@ -29,6 +29,7 @@ function Editor (props) {
   onCleanup(() => {
     document.removeEventListener('click', handleClick, true)
   })
+
   createEffect(() => {
     if (showEditor()) {
       initWithEntry({
@@ -75,6 +76,7 @@ function Editor (props) {
   const [category, setCategory] = createSignal('Pflege')
   const [workInvalid, setWorkInvalid] = createSignal(false)
   const [id, setId] = createSignal(Date.now())
+  
   const save = () => {
     if (work().length < 1) {
       setWorkInvalid(true)
@@ -91,7 +93,7 @@ function Editor (props) {
     props.saveNewEntry(newEntry)
     setShowEditor(false)
   }
-
+  createEffect(on(()=>work(), ()=>setWorkInvalid(false)))
   return (
     <dialog attr:open={showEditor()}>
       <article ref={editor}>

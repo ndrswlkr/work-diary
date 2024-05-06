@@ -1,8 +1,8 @@
 import {
   For,
-  Show,
+  Match,
+  Switch,
   createEffect,
-  createSignal,
   on,
   onMount,
   useContext
@@ -11,12 +11,18 @@ import { diary, setDiary, loadDiary, saveDiary } from './lib/stores'
 import DiaryEntry from './components/DiaryEntry'
 import FloatingButton from './components/FloatingButton'
 import Editor from './components/Editor'
+import Report from './Report'
 import { DiaryContext } from './DiaryContext'
-
 function Diary () {
-    
-  const { showEditor, setShowEditor, openToEdit, setOpenToEdit, deleteHot, setDeleteHot } =
-    useContext(DiaryContext)
+  const {
+    showEditor,
+    setShowEditor,
+    openToEdit,
+    setOpenToEdit,
+    deleteHot,
+    setDeleteHot,
+    showReport
+  } = useContext(DiaryContext)
 
   onMount(async () => {
     loadDiary()
@@ -26,19 +32,21 @@ function Diary () {
     setDiary([entry, ...diary().filter(e => e.id !== entry.id)])
     saveDiary()
   }
+
   const deleteEntry = async entryId => {
-    if (deleteHot() === false){
-        setDeleteHot(entryId)
-        setTimeout(()=>setDeleteHot(false), 2000)
-        return
+    if (deleteHot() === false) {
+      setDeleteHot(entryId)
+      setTimeout(() => setDeleteHot(false), 2000)
+      return
     }
-    if (deleteHot() === entryId){   
-        setDiary(diary().filter(entry => entry.id !== entryId))
-        saveDiary()
+    if (deleteHot() === entryId) {
+      setDiary(diary().filter(entry => entry.id !== entryId))
+      saveDiary()
     } else {
-        setDeleteHot(entryId)
+      setDeleteHot(entryId)
     }
   }
+
   createEffect(
     on(
       () => openToEdit(),
@@ -55,13 +63,21 @@ function Diary () {
       }
     )
   )
+
   return (
     <div>
       <FloatingButton />
       <Editor saveNewEntry={saveNewEntry} />
-      <For each={diary()}>
-        {entry => <DiaryEntry entry={entry} deleteEntry={deleteEntry} />}
-      </For>
+      <Switch>
+        <Match when={!showReport()}>
+          <For each={diary()}>
+            {entry => <DiaryEntry entry={entry} deleteEntry={deleteEntry} />}
+          </For>
+        </Match>
+        <Match when={showReport()}>
+            <Report />
+        </Match>
+      </Switch>
     </div>
   )
 }

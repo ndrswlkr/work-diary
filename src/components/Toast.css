@@ -1,0 +1,26 @@
+#toast {
+    position: fixed;
+    display: grid;
+    justify-content: center;
+    bottom: 120%;
+    left: 25%;
+    width: 50%;
+    z-index: 2;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--pico-primary-background);
+    color: var(--pico-primary-inverse);
+    opacity: 0%;
+    transition: opacity, .6s;
+  }
+  
+  #toast > h3,
+  #toast > p {
+    color: var(--pico-primary-inverse);
+  }
+  
+  #toast[open="true"] {
+    bottom: 12%;
+    opacity: 100%;
+  }
+  

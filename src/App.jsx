@@ -5,7 +5,7 @@ import '@picocss/pico'
 import Diary from './Diary'
 import NavBar from './components/NavBar'
 import Menu from './components/Menu'
-
+import Toast from './components/Toast'
 function App () {
   const [ask, setAsk] = createSignal(false)
 
@@ -21,6 +21,7 @@ function App () {
     <>
       <NavBar />
       <Menu />
+      <Toast />
       <div class='card'>
         <dialog prop:open={ask()}>
           <h4>Like to get Notified?</h4>

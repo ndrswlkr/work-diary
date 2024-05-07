@@ -14,12 +14,23 @@ function generateReport () {
   return report
 }
 function generateHTMLReport () {
-    let report = ''
+    let report = `<!doctype html><html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>work report</title>
+      </head>
+      <body>
+        <div>
+    `
+        
     diary().forEach(entry => {
       report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min</h4>\n<p>${
         entry.work
       }</p>\n\n`
     })
+    report +=       `</div></body> </html> `
+
     return report
   }
 function shareReport () {

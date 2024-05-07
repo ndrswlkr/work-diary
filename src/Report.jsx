@@ -7,16 +7,25 @@ const [shareSuccess, setShareSuccess] = createSignal('')
 function generateReport () {
   let report = ''
   diary().forEach(entry => {
-    report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min</h4>\n<p>${
+    report += `${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min\n${
       entry.work
-    }</p>\n\n`
+    }\n\n`
   })
   return report
 }
+function generateHTMLReport () {
+    let report = ''
+    diary().forEach(entry => {
+      report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min</h4>\n<p>${
+        entry.work
+      }</p>\n\n`
+    })
+    return report
+  }
 function shareReport () {
-  const report = generateReport()
-  const file = new File([report], "report.txt", {
-    type: "text/plain",
+  const report = generateHTMLReport()
+  const file = new File([report], "report.html", {
+    type: "text/html",
   })
   console.log(navigator.canShare())
   setShareSuccess('pending')

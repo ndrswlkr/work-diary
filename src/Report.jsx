@@ -7,9 +7,9 @@ const [shareSuccess, setShareSuccess] = createSignal('')
 function generateReport () {
   let report = ''
   diary().forEach(entry => {
-    report += `${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min\n${
+    report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min</h4>\n<p>${
       entry.work
-    }\n\n`
+    }</p>\n\n`
   })
   return report
 }
@@ -44,6 +44,7 @@ function Report () {
       <footer>
         <button onClick={() => setShowReport(false)}>close Report</button>
         <button onClick={() => shareReport()}>share report</button>
+        <p>{shareSuccess() || " "}</p>
       </footer>
     </article>
   )

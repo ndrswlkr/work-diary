@@ -14,11 +14,14 @@ function generateReport () {
   return report
 }
 function shareReport () {
-  let report = generateReport()
+  const report = generateReport()
+  const file = new File([report], "report.txt", {
+    type: "text/plain",
+  })
   console.log(navigator.canShare())
   setShareSuccess('pending')
   navigator
-    .share({ title: 'Work Report', text: report })
+    .share({ title: 'Work Report', text: "hier ist der neuste Arbeitsraport", files: [file]})
     .then(() => {
       setShareSuccess('shared successfully')
     })

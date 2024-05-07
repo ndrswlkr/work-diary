@@ -14,7 +14,10 @@ function generateReport () {
   return report
 }
 function generateHTMLReport () {
-    let report = `<!doctype html><html lang="en">
+    let totalTime = 0
+    diary().forEach(entry => {totalTime += entry.duration})
+  let report = `
+    <!doctype html><html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,26 +25,32 @@ function generateHTMLReport () {
       </head>
       <body>
         <div>
+          <h2>Arbeitsraport</h2>
     `
-        
-    diary().forEach(entry => {
-      report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min</h4>\n<p>${
-        entry.work
-      }</p>\n\n`
-    })
-    report +=       `</div></body> </html> `
+    report += `<h3>Zeitaufwand total: ${totalTime} min</h3>`
 
-    return report
-  }
+  diary().forEach(entry => {
+    report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${
+      entry.duration
+    } min</h4>\n<p>${entry.work}</p>\n\n`
+  })
+  report += `</div></body> </html> `
+
+  return report
+}
 function shareReport () {
   const report = generateHTMLReport()
-  const file = new File([report], "report.html", {
-    type: "text/html",
+  const file = new File([report], 'report.html', {
+    type: 'text/html'
   })
   console.log(navigator.canShare())
   setShareSuccess('pending')
   navigator
-    .share({ title: 'Work Report', text: "hier ist der neuste Arbeitsraport", files: [file]})
+    .share({
+      title: 'Work Report',
+      text: 'hier ist der neuste Arbeitsraport',
+      files: [file]
+    })
     .then(() => {
       setShareSuccess('shared successfully')
     })
@@ -64,7 +73,7 @@ function Report () {
       <footer>
         <button onClick={() => setShowReport(false)}>close Report</button>
         <button onClick={() => shareReport()}>share report</button>
-        <p>{shareSuccess() || " "}</p>
+        <p>{shareSuccess() || ' '}</p>
       </footer>
     </article>
   )

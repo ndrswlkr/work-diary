@@ -5,7 +5,12 @@ import { pretty_date } from './lib/diary_functions'
 import { setToastMessage } from './lib/globals'
 const [shareSuccess, setShareSuccess] = createSignal('')
 function generateReport () {
-  let report = ''
+  let totalTime = 0
+  diary().forEach(entry => {
+    totalTime += Number(entry.duration)
+  })
+  let report = 'Arbeitsraport\n-------------\n'
+  report += `\nZeitaufwand total: ${totalTime} min\n\n`
   diary().forEach(entry => {
     report += `${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min\n${
       entry.work
@@ -14,8 +19,10 @@ function generateReport () {
   return report
 }
 function generateHTMLReport () {
-    let totalTime = 0
-    diary().forEach(entry => {totalTime += entry.duration})
+  let totalTime = 0
+  diary().forEach(entry => {
+    totalTime += Number(entry.duration)
+  })
   let report = `
     <!doctype html><html lang="en">
       <head>
@@ -27,7 +34,7 @@ function generateHTMLReport () {
         <div>
           <h2>Arbeitsraport</h2>
     `
-    report += `<h3>Zeitaufwand total: ${totalTime} min</h3>`
+  report += `<h3>Zeitaufwand total: ${totalTime} min</h3>`
 
   diary().forEach(entry => {
     report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${

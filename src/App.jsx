@@ -6,6 +6,8 @@ import Diary from './Diary'
 import NavBar from './components/NavBar'
 import Menu from './components/Menu'
 import Toast from './components/Toast'
+
+
 function App () {
   const [ask, setAsk] = createSignal(false)
 

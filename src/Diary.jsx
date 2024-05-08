@@ -65,7 +65,7 @@ function Diary () {
   )
 
   return (
-    <div>
+    <div >
       <FloatingButton />
       <Editor saveNewEntry={saveNewEntry} />
       <Switch>

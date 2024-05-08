@@ -1,6 +1,7 @@
 import './NavBar.css'
 import { useContext } from 'solid-js'
 import { DiaryContext } from '../DiaryContext'
+
 function NavBar () {
   const {showMenu, setShowMenu} = useContext(DiaryContext)
   return (

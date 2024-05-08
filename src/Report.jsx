@@ -3,8 +3,37 @@ import { DiaryContext } from './DiaryContext'
 import { diary } from './lib/stores'
 import { pretty_date } from './lib/diary_functions'
 import { setToastMessage } from './lib/globals'
+import ReportView from './components/ReportView'
 const [shareSuccess, setShareSuccess] = createSignal('')
+
 function generateReport () {
+  let totalTime = 0
+  diary().forEach(entry => {
+    totalTime += Number(entry.duration)
+  })
+  let report = {}
+  report.totalTime = `${totalTime} min`
+  report.totalLines = 0
+  report.report = {}
+  diary().forEach(entry => {
+    let date = pretty_date(entry.date)
+    if (!(date in report.report)) report.report[date] = {works:[], duration: 0}
+    report.report[date].duration += Number(entry.duration)
+    let lines = entry.work.split('\n')
+    lines = lines.filter(line => line.length > 0)
+    report.totalLines += lines.length
+    report.report[date].works.push({
+      date: date,
+      duration:  entry.duration,
+      work: lines,
+      category: entry.category
+      
+
+    })
+  })
+  return report
+}
+/* function generateReport () {
   let totalTime = 0
   diary().forEach(entry => {
     totalTime += Number(entry.duration)
@@ -17,7 +46,7 @@ function generateReport () {
     }\n\n`
   })
   return report
-}
+} */
 function generateHTMLReport () {
   let totalTime = 0
   diary().forEach(entry => {
@@ -46,9 +75,12 @@ function generateHTMLReport () {
   return report
 }
 function shareReport () {
-  const report = generateHTMLReport()
-  const file = new File([report], 'report.html', {
-    type: 'text/html'
+  //const report = generateHTMLReport()
+  var canvas = document.querySelector("#report-canvas")
+  console.log(canvas)
+const report = canvas.toDataURL("image/png")
+  const file = new File([report], 'report.png', {
+    type: 'image/png'
   })
   console.log(navigator.canShare())
   setShareSuccess('pending')
@@ -72,11 +104,11 @@ function shareReport () {
 function Report () {
   const { showReport, setShowReport } = useContext(DiaryContext)
   return (
-    <article>
+    <article style={{"min-height": "100vh", height: "100vh"}}>
       <header>
         Work Report can share: {navigator.canShare() ? 'yes' : 'no'}
       </header>
-      <pre>{generateReport()}</pre>
+      <ReportView report={generateReport()} />
       <footer>
         <button onClick={() => setShowReport(false)}>close Report</button>
         <button onClick={() => shareReport()}>share report</button>

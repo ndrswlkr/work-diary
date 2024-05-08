@@ -27,7 +27,6 @@ export function loadDiary () {
   localforage
     .getItem('diary')
     .then(data => {
-      console.log(data)
       if (data) {
         setDiary(JSON.parse(data))
       }
@@ -56,7 +55,6 @@ export const exportDiary = () => {
 }
 
 export const importDiary = file => {
-  console.log('importing diary data', file)
   let fr = new FileReader()
   fr.onload = e => {
     try{

@@ -74,14 +74,25 @@ function generateHTMLReport () {
 
   return report
 }
+
+function dataURLtoFile(dataurl, filename) {
+  var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[arr.length - 1]), 
+      n = bstr.length, 
+      u8arr = new Uint8Array(n);
+  while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type:mime});
+}
+
+
 function shareReport () {
   //const report = generateHTMLReport()
   var canvas = document.querySelector("#report-canvas")
-  console.log(canvas)
 const report = canvas.toDataURL("image/png")
-  const file = new File([report], 'report.png', {
-    type: 'image/png'
-  })
+  const file = dataURLtoFile(report, 'report.png')
   console.log(navigator.canShare())
   setShareSuccess('pending')
   navigator

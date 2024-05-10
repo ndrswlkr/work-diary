@@ -3,7 +3,8 @@ import { useContext } from 'solid-js'
 import { DiaryContext } from '../DiaryContext'
 
 function NavBar () {
-  const {showMenu, setShowMenu} = useContext(DiaryContext)
+  const { showMenu, setShowMenu, showFilter, setShowFilter } =
+    useContext(DiaryContext)
   return (
     <nav>
       <ul>
@@ -15,12 +16,25 @@ function NavBar () {
       </ul>
       <ul>
         <li>
-          <h2>Work Diary</h2>
+          <h3>Work Diary</h3>
         </li>
       </ul>
       <ul>
         <li>
-          <button onclick={()=>setShowMenu(!showMenu())}>Menu</button>
+          <button
+            onClick={() => setShowFilter(!showFilter())}
+            class='icon-button outline no-outline'
+          >
+            <i class='fa-solid fa-filter'></i>
+          </button>
+        </li>
+        <li>
+          <button
+            class='icon-button outline no-outline'
+            onclick={() => setShowMenu(!showMenu())}
+          >
+            <i class='fa-solid fa-bars'></i>
+          </button>
         </li>
       </ul>
     </nav>

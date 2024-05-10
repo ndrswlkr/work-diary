@@ -1,23 +1,50 @@
 import { createContext, createResource, createSignal } from 'solid-js'
-
+import { diary } from './lib/stores'
 export const DiaryContext = createContext()
-import {toastMessage, setToastMessage} from './lib/globals'
+import { toastMessage, setToastMessage } from './lib/globals'
+import { neutralNow } from './lib/diary_functions'
+
 export function DiaryContextProvider (props) {
- 
   const [showEditor, setShowEditor] = createSignal(false)
   const [openToEdit, setOpenToEdit] = createSignal(null)
   const [deleteHot, setDeleteHot] = createSignal(false)
   const [showMenu, setShowMenu] = createSignal(false)
   const [showReport, setShowReport] = createSignal(false)
+  const [showFilter, setShowFilter] = createSignal(false)
+  const initFilter = () => {
+    return {
+      done: 'both',
+      dateBegin: 0,
+      dateEnd: neutralNow(),
+      category: 'All'
+    }
+  }
+  const [filter, setFilter] = createSignal(initFilter())
+  const resetFilter = () => setFilter(initFilter())
+  const filteredDiary = () => {
+   
+    let filtered = diary().filter(
+      e =>
+        e.date >= filter().dateBegin &&
+        e.date <= filter().dateEnd &&
+        (filter().done === 'both' ||
+          (filter().done === 'done' && e.done === true) ||
+          (filter().done === 'pending' && e.done === false)) &&
+        (filter().category === 'All' || filter().category === e.category)
+    )
+
+    return filtered
+  }
   const categorys = [
-    "Pflege",
-    "Pflanzen/Setzen",
-    "Ernten",
-    "Pflanzenschutz",
-    "Anzucht",
-    "Umgebungsarbeiten",
-    "Anderes"
-]
+    'Pflege',
+    'Pflanzen/Setzen',
+    'Ernten',
+    'Boden',
+    'Pflanzenschutz',
+    'Anzucht',
+    'Umgebungsarbeiten',
+    'Anderes'
+  ]
   return (
     <DiaryContext.Provider
       value={{
@@ -33,7 +60,13 @@ export function DiaryContextProvider (props) {
         toastMessage,
         setToastMessage,
         showReport,
-        setShowReport
+        setShowReport,
+        showFilter,
+        setShowFilter,
+        filter,
+        setFilter,
+        resetFilter,
+        filteredDiary
       }}
     >
       {props.children}

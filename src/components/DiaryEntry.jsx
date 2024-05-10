@@ -2,10 +2,16 @@ import { useContext } from 'solid-js'
 import { pretty_date } from '../lib/diary_functions'
 import './DiaryEntry.css'
 import { DiaryContext } from '../DiaryContext'
+import { diary, saveDiary, setDiary } from '../lib/stores'
 
 function DiaryEntry (props) {
   const { setOpenToEdit, deleteHot } = useContext(DiaryContext)
-
+  const toggleDone = (entry) => {
+    //entry.done = !entry.done
+    setDiary( [...diary().map( e=> (e.id === entry.id) ?{...e, done: !e.done} : e = e ) ])
+    console.log(diary())
+    saveDiary()
+  }
   return (
     <article>
       <header>
@@ -36,7 +42,7 @@ function DiaryEntry (props) {
       <footer>
         <div class='diary-grid-1'>
           <label>
-            <input type='checkbox' checked={props.entry.done} />
+            <input type='checkbox' checked={props.entry.done} onClick={()=>toggleDone(props.entry)}/>
             done
           </label>
           <p>{pretty_date(props.entry.date)}</p>

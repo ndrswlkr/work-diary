@@ -1,13 +1,17 @@
 ## totally needed
 x handle errors in stores -> importDiary
-  -fr.onerror = () => ...
+  x fr.onerror = () => ...
 x add toast for error notification or use notifications from SW
-- fliter section filter by year, month, category
-- report function
-  - report verfeinern: total zeitaufwand, kategorien
+x fliter section filter by year, month, category
+  x filter shortcuts for "today" "this year" "this month"
+x report function
+  x report verfeinern: total zeitaufwand, kategorien
 x hide add button when in report
 x reset invalidate on input in editor textarea
-x make githup page of this app
+x make github page of this app
+- edit done from Diary.jsx
+- filter date end must be 23:59 or else it would miss entrys
+<!--  -->
 ## eventually
 x share reports 
 - add bed selector and save bed id with work

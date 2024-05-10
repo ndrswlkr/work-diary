@@ -1,4 +1,11 @@
-.icon-button{
-    border-radius: 100%;
-    margin-inline-end: 1rem;
+.icon-button {
+  border-radius: 30%;
+  margin-right: .5rem;
+  /*     margin-inline-end: 1rem;
+border: none;
+outline: none;
+*/
+    width: 4rem;
+    height: 4rem;
+  font-size: 1.6rem;
 }

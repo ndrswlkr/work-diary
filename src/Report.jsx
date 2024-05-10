@@ -1,4 +1,4 @@
-import { createSignal, useContext } from 'solid-js'
+import { createEffect, createSignal, onMount, useContext, on } from 'solid-js'
 import { DiaryContext } from './DiaryContext'
 import { diary } from './lib/stores'
 import { pretty_date } from './lib/diary_functions'
@@ -6,94 +6,51 @@ import { setToastMessage } from './lib/globals'
 import ReportView from './components/ReportView'
 const [shareSuccess, setShareSuccess] = createSignal('')
 
-function generateReport () {
+function generateReport (diary) {
   let totalTime = 0
-  diary().forEach(entry => {
+  diary.forEach(entry => {
     totalTime += Number(entry.duration)
   })
   let report = {}
   report.totalTime = `${totalTime} min`
   report.totalLines = 0
   report.report = {}
-  diary().forEach(entry => {
+  diary.forEach(entry => {
     let date = pretty_date(entry.date)
-    if (!(date in report.report)) report.report[date] = {works:[], duration: 0}
+    if (!(date in report.report))
+      report.report[date] = { works: [], duration: 0 }
     report.report[date].duration += Number(entry.duration)
     let lines = entry.work.split('\n')
     lines = lines.filter(line => line.length > 0)
     report.totalLines += lines.length
     report.report[date].works.push({
       date: date,
-      duration:  entry.duration,
+      duration: entry.duration,
       work: lines,
-      category: entry.category
-      
-
+      category: entry.category,
+      done: entry.done
     })
   })
   return report
 }
-/* function generateReport () {
-  let totalTime = 0
-  diary().forEach(entry => {
-    totalTime += Number(entry.duration)
-  })
-  let report = 'Arbeitsraport\n-------------\n'
-  report += `\nZeitaufwand total: ${totalTime} min\n\n`
-  diary().forEach(entry => {
-    report += `${pretty_date(entry.date)} Zeitaufwand: ${entry.duration} min\n${
-      entry.work
-    }\n\n`
-  })
-  return report
-} */
-function generateHTMLReport () {
-  let totalTime = 0
-  diary().forEach(entry => {
-    totalTime += Number(entry.duration)
-  })
-  let report = `
-    <!doctype html><html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>work report</title>
-      </head>
-      <body>
-        <div>
-          <h2>Arbeitsraport</h2>
-    `
-  report += `<h3>Zeitaufwand total: ${totalTime} min</h3>`
 
-  diary().forEach(entry => {
-    report += `<h4>${pretty_date(entry.date)} Zeitaufwand: ${
-      entry.duration
-    } min</h4>\n<p>${entry.work}</p>\n\n`
-  })
-  report += `</div></body> </html> `
-
-  return report
-}
-
-function dataURLtoFile(dataurl, filename) {
+function dataURLtoFile (dataurl, filename) {
   var arr = dataurl.split(','),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[arr.length - 1]), 
-      n = bstr.length, 
-      u8arr = new Uint8Array(n);
-  while(n--){
-      u8arr[n] = bstr.charCodeAt(n);
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[arr.length - 1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
   }
-  return new File([u8arr], filename, {type:mime});
+  return new File([u8arr], filename, { type: mime })
 }
-
 
 function shareReport () {
   //const report = generateHTMLReport()
-  var canvas = document.querySelector("#report-canvas")
-const report = canvas.toDataURL("image/png")
+  var canvas = document.querySelector('#report-canvas')
+  const report = canvas.toDataURL('image/png')
   const file = dataURLtoFile(report, 'report.png')
-  console.log(navigator.canShare())
   setShareSuccess('pending')
   navigator
     .share({
@@ -113,18 +70,40 @@ const report = canvas.toDataURL("image/png")
     )
 }
 function Report () {
-  const { showReport, setShowReport } = useContext(DiaryContext)
+  const { showReport, setShowReport, filter, filteredDiary } =
+    useContext(DiaryContext)
+  const [report, setReport] = createSignal(generateReport(filteredDiary()))
+  onMount(() => {
+    setShareSuccess(' ')
+  })
+
+  createEffect(
+    on(
+      () => filter(),
+      () => {
+        console.log("re run generate report")
+        setReport(generateReport(filteredDiary()))
+        console.log(report())
+
+      }
+    )
+  )
+
   return (
-    <article style={{"min-height": "100vh", height: "100vh"}}>
+    <article>
       <header>
-        Work Report can share: {navigator.canShare() ? 'yes' : 'no'}
-      </header>
-      <ReportView report={generateReport()} />
-      <footer>
-        <button onClick={() => setShowReport(false)}>close Report</button>
-        <button onClick={() => shareReport()}>share report</button>
+        <button
+          class='icon-button outline'
+          onClick={() => setShowReport(false)}
+        >
+          <i class='fa-solid fa-circle-xmark'></i>
+        </button>
+        <button class='icon-button outline' onClick={() => shareReport()}>
+          <i class='fa-solid fa-share-nodes'></i>
+        </button>
         <p>{shareSuccess() || ' '}</p>
-      </footer>
+      </header>
+      <ReportView report={report()} />
     </article>
   )
 }

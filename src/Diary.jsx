@@ -21,7 +21,8 @@ function Diary () {
     setOpenToEdit,
     deleteHot,
     setDeleteHot,
-    showReport
+    showReport,
+    filteredDiary
   } = useContext(DiaryContext)
 
   onMount(async () => {
@@ -29,7 +30,9 @@ function Diary () {
   })
 
   const saveNewEntry = async entry => {
+    console.log("setting new entry"), entry
     setDiary([entry, ...diary().filter(e => e.id !== entry.id)])
+    console.log(diary())
     saveDiary()
   }
 
@@ -70,7 +73,7 @@ function Diary () {
       <Editor saveNewEntry={saveNewEntry} />
       <Switch>
         <Match when={!showReport()}>
-          <For each={diary()}>
+          <For each={filteredDiary()}>
             {entry => <DiaryEntry entry={entry} deleteEntry={deleteEntry} />}
           </For>
         </Match>

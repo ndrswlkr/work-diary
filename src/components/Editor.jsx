@@ -7,7 +7,7 @@ import {
   useContext,
   on
 } from 'solid-js'
-import { epoc_date, standard_date } from '../lib/diary_functions'
+import { epoc_date, neutralNow, standard_date } from '../lib/diary_functions'
 import { diary } from '../lib/stores'
 import { DiaryContext } from '../DiaryContext'
 let editor
@@ -15,7 +15,6 @@ let editor
 function Editor (props) {
   const { showEditor, setShowEditor, openToEdit, setOpenToEdit, categorys } =
     useContext(DiaryContext)
-
   const handleClick = event => {
     if (!showEditor()) return
     if (!editor.contains(event.target)) {
@@ -34,7 +33,7 @@ function Editor (props) {
     if (showEditor()) {
       initWithEntry({
         id: Date.now(),
-        date: Date.now(),
+        date: neutralNow(),
         work: '',
         category: 'Pflege',
         done: true,
@@ -47,7 +46,7 @@ function Editor (props) {
     } else {
       initWithEntry({
         id: Date.now(),
-        date: Date.now(),
+        date: neutralNow(),
         work: '',
         category: 'Pflege',
         done: true,

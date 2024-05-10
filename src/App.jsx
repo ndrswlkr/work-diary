@@ -6,6 +6,7 @@ import Diary from './Diary'
 import NavBar from './components/NavBar'
 import Menu from './components/Menu'
 import Toast from './components/Toast'
+import Filter from './components/Filter'
 
 
 function App () {
@@ -23,6 +24,7 @@ function App () {
     <>
       <NavBar />
       <Menu />
+      <Filter />
       <Toast />
       <div class='card'>
         <dialog prop:open={ask()}>

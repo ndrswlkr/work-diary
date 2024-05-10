@@ -10,3 +10,9 @@ nav{
     padding-left: 12px;
     padding-right: 12px;
 }
+
+.no-outline{
+    outline: none;
+    border: none;
+    font-size: 2rem;
+}

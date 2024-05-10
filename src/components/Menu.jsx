@@ -48,6 +48,7 @@ function Menu (props) {
         >
           generate Report
         </button>
+        <hr />
         <h6>export Data</h6>
         <p>
           exports current data to your device

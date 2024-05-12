@@ -22,7 +22,14 @@ localforage.config({
   }) */
 
 export const [diary, setDiary] = createSignal([])
-
+export const [gardenPlan, setGardenPlan] = createSignal({
+  sections: [
+    { name: 'Herbs', num: 0, beds: [{name: "Herbs 1", num: 0}] },
+    { name: 'nord', num: 1, beds: [{name: "nord 1", num: 0}, {name: "nord 2", num: 1}] },
+    { name: 'middle', num: 2, beds: [{name: "middle 1", num: 0},{name: "middle 2", num: 0},{name: "middle 3", num: 2}] },
+    { name: 'south', num: 3, beds: [{name: "south 1", num: 0},{name: "south 2", num: 1},{name: "south 3", num: 2},{name: "south 4", num: 3},] },
+  ]
+})
 export function loadDiary () {
   localforage
     .getItem('diary')
@@ -57,20 +64,26 @@ export const exportDiary = () => {
 export const importDiary = file => {
   let fr = new FileReader()
   fr.onload = e => {
-    try{
-
-        let diaryData = JSON.parse(e.target.result)
-        setDiary(diaryData)
-        saveDiary()
-    }
-    catch(e) {
-        setToastMessage({show:true, title: "error importing file", message: file.name+ " " + e})
+    try {
+      let diaryData = JSON.parse(e.target.result)
+      setDiary(diaryData)
+      saveDiary()
+    } catch (e) {
+      setToastMessage({
+        show: true,
+        title: 'error importing file',
+        message: file.name + ' ' + e
+      })
     }
   }
 
   fr.onerror = e => {
     console.log(e)
-    setToastMessage({show: true, title: "error", message:"error importing diary data"})
+    setToastMessage({
+      show: true,
+      title: 'error',
+      message: 'error importing diary data'
+    })
   }
 
   fr.readAsText(file)

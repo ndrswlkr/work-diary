@@ -14,7 +14,6 @@ function Filter () {
   let filterArticle
   let dateBegin
   let dateEnd
-  console.log(filter().done)
   const handleClick = event => {
     if (!showFilter()) return
     if (!filterArticle.contains(event.target)) {

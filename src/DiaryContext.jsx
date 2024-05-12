@@ -1,4 +1,4 @@
-import { createContext, createResource, createSignal } from 'solid-js'
+import { createContext, createSignal } from 'solid-js'
 import { diary } from './lib/stores'
 export const DiaryContext = createContext()
 import { toastMessage, setToastMessage } from './lib/globals'
@@ -11,6 +11,7 @@ export function DiaryContextProvider (props) {
   const [showMenu, setShowMenu] = createSignal(false)
   const [showReport, setShowReport] = createSignal(false)
   const [showFilter, setShowFilter] = createSignal(false)
+  const [showGardenMap, setShowGardenMap]  = createSignal(false)
   const initFilter = () => {
     return {
       done: 'both',
@@ -66,7 +67,9 @@ export function DiaryContextProvider (props) {
         filter,
         setFilter,
         resetFilter,
-        filteredDiary
+        filteredDiary,
+        showGardenMap,
+        setShowGardenMap
       }}
     >
       {props.children}

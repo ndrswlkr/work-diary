@@ -12,8 +12,14 @@ let menu
 let fileInput
 
 function Menu (props) {
-  const { showMenu, setShowMenu, showReport, setShowReport } =
-    useContext(DiaryContext)
+  const {
+    showMenu,
+    setShowMenu,
+    showReport,
+    setShowReport,
+    showGardenMap,
+    setShowGardenMap
+  } = useContext(DiaryContext)
 
   const handleClick = event => {
     if (!showMenu()) return
@@ -38,6 +44,15 @@ function Menu (props) {
             onclick={() => setShowMenu(false)}
           >
             <i class='fa-solid fa-circle-xmark'></i>
+          </button>
+          <button
+            class='icon-button outline'
+            onclick={() => {
+              setShowGardenMap(true)
+              setShowMenu(false)
+            }}
+          >
+            <i class='fa-solid fa-location-dot'></i>
           </button>
         </header>
         <button

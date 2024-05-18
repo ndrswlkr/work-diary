@@ -19,6 +19,8 @@ export class GardenMapWriter {
   }
 
   setUp (gardenPlan) {
+    this.sectionObjects = []
+    this.yPos = 10
     gardenPlan.sections.forEach(section => {
       let sectionObject = new GardenSection(section, this.canvas)
       this.sectionObjects.push(sectionObject)
@@ -52,5 +54,13 @@ export class GardenMapWriter {
       }
     }
     return null
+  }
+  getBedById(id){
+    for ( let sectionObj of this.sectionObjects){
+        let bed =   sectionObj.bedObjects.find( b => b.id === id)
+        console.log("getbedbyid", bed)
+        if (bed) return bed
+    }
+   return bed
   }
 }

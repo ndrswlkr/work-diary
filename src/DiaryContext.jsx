@@ -3,6 +3,7 @@ import { diary } from './lib/stores'
 export const DiaryContext = createContext()
 import { toastMessage, setToastMessage } from './lib/globals'
 import { neutralNow } from './lib/diary_functions'
+import { createStore } from 'solid-js/store'
 
 export function DiaryContextProvider (props) {
   const [showEditor, setShowEditor] = createSignal(false)
@@ -11,7 +12,13 @@ export function DiaryContextProvider (props) {
   const [showMenu, setShowMenu] = createSignal(false)
   const [showReport, setShowReport] = createSignal(false)
   const [showFilter, setShowFilter] = createSignal(false)
-  const [showGardenMap, setShowGardenMap]  = createSignal(false)
+  const [showGardenMap, setShowGardenMap] = createSignal(false)
+  const [showGardenMapEditor, setShowGardenMapEditor] = createSignal(false)
+  const [showCulturesEditor, setShowCulturesEditor] = createSignal(false) 
+  const [bedCommunication, setBedCommunication] = createStore({
+    return: null,
+    highlight: null
+  })
   const initFilter = () => {
     return {
       done: 'both',
@@ -23,7 +30,6 @@ export function DiaryContextProvider (props) {
   const [filter, setFilter] = createSignal(initFilter())
   const resetFilter = () => setFilter(initFilter())
   const filteredDiary = () => {
-   
     let filtered = diary().filter(
       e =>
         e.date >= filter().dateBegin &&
@@ -39,6 +45,7 @@ export function DiaryContextProvider (props) {
   const categorys = [
     'Pflege',
     'Pflanzen/Setzen',
+    'Aussaat',
     'Ernten',
     'Boden',
     'Pflanzenschutz',
@@ -46,6 +53,9 @@ export function DiaryContextProvider (props) {
     'Umgebungsarbeiten',
     'Anderes'
   ]
+
+
+
   return (
     <DiaryContext.Provider
       value={{
@@ -69,7 +79,13 @@ export function DiaryContextProvider (props) {
         resetFilter,
         filteredDiary,
         showGardenMap,
-        setShowGardenMap
+        setShowGardenMap,
+        showGardenMapEditor,
+        setShowGardenMapEditor,
+        bedCommunication,
+        setBedCommunication,
+        showCulturesEditor,
+        setShowCulturesEditor
       }}
     >
       {props.children}

@@ -37,4 +37,11 @@ export class GardenBed extends Object{
         this.context.fillText(this.name, this.x + 10, this.y + this.bedWidth / 2 + 5)
         this.context.fill()
     }
+    drawInfo(info){
+        this.context.beginPath()
+        this.context.fillStyle = "white"
+        this.context.font = "20px system-ui"
+        this.context.fillText(`${this.name} ${info}`, this.x + 10, this.y + this.bedWidth / 2 + 5)
+        this.context.fill()
+    }
 }

@@ -9,11 +9,23 @@ x report function
 x hide add button when in report
 x reset invalidate on input in editor textarea
 x make github page of this app
-- edit done from Diary.jsx
-- filter date end must be 23:59 or else it would miss entrys
+x edit done from Diary.jsx
+x add bed selector and save bed id with work
+  x make GardenMapEditor
+  x uuid for each bed
+  x add bed selector to create/edit entry
+  x highlight corresponding bed if there is one set on reopening Map
+x add culture or culture groups for "fruchtfolge tracking"
+  x culture editor
+  - show cultures in Bed, cycle...
+- make category a <select> element
+
+x make culture persistent
+
+- save and load diary, gardenPlan and culture Data as one file
+- adjust report to new cultures and gardenPlan
 <!--  -->
 ## eventually
 x share reports 
-- add bed selector and save bed id with work
-- add culture or culture groups for "fruchtfolge tracking"
 - ask periodically via notification if any work was done
+- little animated gardener that wanders arround the garden map and maybe does some stuff

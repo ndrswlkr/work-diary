@@ -14,6 +14,7 @@ import Editor from './components/Editor'
 import Report from './Report'
 import { DiaryContext } from './DiaryContext'
 import GardenMap from './GardenMap'
+
 function Diary () {
   const {
     showEditor,
@@ -71,8 +72,8 @@ function Diary () {
   return (
     <div >
       <FloatingButton />
-      <GardenMap />
       <Editor saveNewEntry={saveNewEntry} />
+      <GardenMap />
       <Switch>
         <Match when={!showReport()}>
           <For each={filteredDiary()}>

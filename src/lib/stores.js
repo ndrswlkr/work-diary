@@ -7,20 +7,6 @@ localforage.config({
   name: 'work-diary'
 })
 
-/* localforage
-  .ready()
-  .then(function () {
-    // This code runs once localforage
-    // has fully initialized the selected driver.
-    console.log(localforage.supports(localforage.INDEXEDDB))
-    localforage.setDriver([localforage.WEBSQL, localforage.INDEXEDDB])
-    console.log(localforage.driver()) // localforage
-  })
-  .catch(function (e) {
-    console.log(e) // `No available storage method found.`
-    // One of the cases that `ready()` rejects,
-    // is when no usable storage driver is found
-  }) */
 
 export const [diary, setDiary] = createSignal([])
 export const [gardenPlan, setGardenPlan] = createSignal({ sections: [] })
@@ -39,49 +25,6 @@ export function loadGardenPlan () {
 export function saveGardenPlan () {
   let data = JSON.stringify(gardenPlan())
   localforage.setItem('gardenPlan', data).catch(e => console.log(e))
-}
-
-export const exportGardenPlan = () => {
-  let data =
-    'data:text/json;charset=utf-8,' +
-    encodeURIComponent(JSON.stringify(gardenPlan()))
-  let element = document.createElement('a')
-  element.setAttribute('href', data)
-  element.setAttribute('download', 'gardenPlan-export.json')
-
-  element.style.display = 'none'
-  document.body.appendChild(element)
-  element.click()
-
-  document.body.removeChild(element)
-}
-
-export const importGardenPlan = file => {
-  let fr = new FileReader()
-  fr.onload = e => {
-    try {
-      let gardenPlanData = JSON.parse(e.target.result)
-      setGardenPlan(gardenPlanData)
-      saveDiary()
-    } catch (e) {
-      setToastMessage({
-        show: true,
-        title: 'error importing file',
-        message: file.name + ' ' + e
-      })
-    }
-  }
-
-  fr.onerror = e => {
-    console.log(e)
-    setToastMessage({
-      show: true,
-      title: 'error',
-      message: 'error importing gardenPlan data'
-    })
-  }
-
-  fr.readAsText(file)
 }
 
 export function loadDiary () {
@@ -103,7 +46,7 @@ export function saveDiary () {
 export const exportDiary = () => {
   let data =
     'data:text/json;charset=utf-8,' +
-    encodeURIComponent(JSON.stringify(diary()))
+    encodeURIComponent(JSON.stringify({diary: diary(), cultures: cultures(), gardenPlan: gardenPlan()}))
   let element = document.createElement('a')
   element.setAttribute('href', data)
   element.setAttribute('download', 'diary-export.json')
@@ -119,9 +62,16 @@ export const importDiary = file => {
   let fr = new FileReader()
   fr.onload = e => {
     try {
-      let diaryData = JSON.parse(e.target.result)
+      let fullData = JSON.parse(e.target.result)
+      let diaryData = fullData.diary
+      let culturesData = fullData.cultures
+      let gardenPlanData = fullData.gardenPlan
       setDiary(diaryData)
       saveDiary()
+      setCultures(culturesData)
+      saveCultures()
+      setGardenPlan(gardenPlanData)
+      saveGardenPlan()
     } catch (e) {
       setToastMessage({
         show: true,

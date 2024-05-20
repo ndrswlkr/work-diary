@@ -78,7 +78,9 @@ function ReportView (props) {
     }else{
         reportWriter.drawPending()
     }
-    reportWriter.writeCategory(work.category.toUpperCase(), 35)
+    let categoryAndCulture = work.category.toUpperCase()
+    if(work.culture && work.culture !== "keine Kultur gewählt") categoryAndCulture += "   " + work.culture.toUpperCase()
+      reportWriter.writeCategory(categoryAndCulture, 35)
     for (let line of work.work) {
       if (line.length) reportWriter.writeLine(line, 35)
     }
@@ -95,6 +97,7 @@ function ReportView (props) {
         reportWriter.writeSubtitle(
           'Zeitaufwand in Periode: ' + report.totalTime
         )
+        reportWriter.drawSeparator()
         for (let day in report.report) {
           reportWriter.writeSubtitle(
             `${day}     ${report.report[day].duration} min`

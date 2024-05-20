@@ -1,26 +1,44 @@
 console.log('this message is from your service worker + 1')
-
+let done = false
+let timer = null
 self.addEventListener('message', message => {
-  const intervals = message.data.body.data || []
+  //const intervals = message.data.body.data || []
 
-  //console.log('got message, with all the best wishes, your SW')
-  //self.registration.showNotification('from SW with love', { body: 'yesyesyes' })
-  let intervalSum = 0
-  intervals.forEach(int => {
-    let interval = int + intervalSum
-    intervalSum = intervalSum + int
-    setTimeout(() => {
-      self.registration.showNotification('next Workout step', {
-        body: `int ${int} sum ${intervalSum}`,
-        vibrate: [200, 100, 200, 100, 200, 100, 200],
-        tag: 'workout-interval',
-        renotify: true,
-        icon: '/workout-timer/pwa-192x192.png',
-        actions: [{action: 'repeat_this', title: 'REPEAT'}]
-      })
-    }, interval * 1000)
-  })
+  console.log("message recieved")
+ remindDiary()
 })
+
+function remindDiary(){
+  if (timeToAsk()){
+    done = true
+    self.registration.showNotification('Any work done today', {
+      body: `note your work in work-diary`,
+      vibrate: [200, 100, 200, 100, 200, 100, 200],
+      tag: 'diary-reminder',
+      renotify: true,
+      icon: '/work-diary/pwa-192x192.png',
+      //actions: [{action: 'repeat_this', title: 'REPEAT'}]
+    })
+  }
+  timer = null
+  timer = setTimeout( ()=>remindDiary(), 10000)
+}
+
+function timeToAsk(){
+  let current = new Date(Date.now())
+  let next = new Date(Date.now())
+  next.setHours(21)
+  next.setMinutes(40)
+  next.setSeconds(0)
+  next.setMilliseconds(0)
+
+  if (next - current < -5*60*1000)
+    done = false
+    
+    if (done === false && next - current < 0)
+    return true
+  return false
+}
 
 self.addEventListener('notificationclick', event => {
   //console.log('On notification click: ', event.notification)

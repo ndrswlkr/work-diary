@@ -1,6 +1,6 @@
 import { createEffect, createSignal, onMount, useContext, on } from 'solid-js'
 import { DiaryContext } from './DiaryContext'
-import { diary } from './lib/stores'
+import { cultureFromId, diary } from './lib/stores'
 import { pretty_date } from './lib/diary_functions'
 import { setToastMessage } from './lib/globals'
 import ReportView from './components/ReportView'
@@ -28,6 +28,7 @@ function generateReport (diary) {
       duration: entry.duration,
       work: lines,
       category: entry.category,
+      culture: cultureFromId(entry.culture),
       done: entry.done
     })
   })

@@ -17,13 +17,13 @@ x add bed selector and save bed id with work
   x highlight corresponding bed if there is one set on reopening Map
 x add culture or culture groups for "fruchtfolge tracking"
   x culture editor
-  - show cultures in Bed, cycle...
-- make category a <select> element
+  x show cultures in Bed, cycle...
+x make category a <select> element
 
 x make culture persistent
 
-- save and load diary, gardenPlan and culture Data as one file
-- adjust report to new cultures and gardenPlan
+x save and load diary, gardenPlan and culture Data as one file
+x adjust report to new cultures and gardenPlan
 <!--  -->
 ## eventually
 x share reports 

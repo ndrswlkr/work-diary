@@ -107,7 +107,7 @@ function Editor (props) {
   const [correspondingBedName, setCorrespondingBedName] = createSignal(null)
   const [culture, setCulture] = createSignal('none')
 
-  function selectCultureModel (el, value) {
+  function selectModel (el, value) {
     const [field, setField] = value()
     createRenderEffect(() => (el.value = field()))
     el.oninput = e => setField(e.target.value)
@@ -224,25 +224,20 @@ function Editor (props) {
             <i class='fa-solid fa-location-dot'></i>
           </button>
         </fieldset>
-        <fieldset>
-          <legend>Kategorie</legend>
-          <For each={categorys}>
-            {cat => (
-              <label>
-                <input
-                  type='radio'
-                  name='category'
-                  checked={cat === category()}
-                  onchange={() => setCategory(cat)}
-                  on
-                />
-                {cat}
-              </label>
-            )}
-          </For>
+   
+        <fieldset >
+          <legend>category</legend>
+          <select use:selectModel={[category, setCategory]}>
+            <For each={categorys}>
+              {c => <option value={c}>{c}</option>}
+            </For>
+          </select>
+         
         </fieldset>
+
         <fieldset role='group'>
-          <select use:selectCultureModel={[culture, setCulture]}>
+          <legend>culture</legend>
+          <select use:selectModel={[culture, setCulture]}>
             <For each={cultures()}>
               {c => <option value={c.id}>{c.name}</option>}
             </For>

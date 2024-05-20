@@ -14,6 +14,7 @@ import Editor from './components/Editor'
 import Report from './Report'
 import { DiaryContext } from './DiaryContext'
 import GardenMap from './GardenMap'
+import { sendMessageToSW } from './lib/notifications'
 
 function Diary () {
   const {
@@ -29,6 +30,7 @@ function Diary () {
 
   onMount(async () => {
     loadDiary()
+    sendMessageToSW()
   })
 
   const saveNewEntry = async entry => {

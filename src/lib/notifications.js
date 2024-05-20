@@ -18,9 +18,9 @@ export function registerSW () {
     }
   }
   
- export function sendMessageToSW (intervals) {
+ export function sendMessageToSW (intervals={}) {
     window.navigator.serviceWorker.ready.then(reg => {
-      reg.active.postMessage({ type: 'message', body: { text: 'hey', data: intervals } })
+      reg.active.postMessage({ type: 'message', body: { text: 'start', data: intervals } })
     })
   }
   

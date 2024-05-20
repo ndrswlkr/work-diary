@@ -5,7 +5,7 @@ self.addEventListener('message', message => {
   //const intervals = message.data.body.data || []
 
   console.log("message recieved")
- remindDiary()
+ //remindDiary()
 })
 
 function remindDiary(){
@@ -28,14 +28,14 @@ function timeToAsk(){
   let current = new Date(Date.now())
   let next = new Date(Date.now())
   next.setHours(21)
-  next.setMinutes(40)
+  next.setMinutes(51)
   next.setSeconds(0)
   next.setMilliseconds(0)
 
   if (next - current < -5*60*1000)
     done = false
     
-    if (done === false && next - current < 0)
+    if (done === false && next - current < 0 ) // && next - current > -3000)
     return true
   return false
 }

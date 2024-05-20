@@ -2,9 +2,9 @@ import {
   For,
   createEffect,
   createSignal,
-  onMount,
   useContext
 } from 'solid-js'
+
 import { DiaryContext } from './DiaryContext'
 import { gardenPlan, saveGardenPlan, setGardenPlan } from './lib/stores'
 import { v1 as uuid} from 'uuid'
@@ -20,6 +20,7 @@ function GardenMapEditor () {
   const [bedName, setBedName] = createSignal('')
   const [sectionSelectInvalid, setSectionSelectInvalid] = createSignal(false)
   let selectedSection = null
+ 
   createEffect(() => {
     if (sectionName().length > 2) setSectionNameInvalid(false)
   })
@@ -50,12 +51,10 @@ function GardenMapEditor () {
     } else {
       setSectionSelectInvalid(false)
     }
-    console.log(sectionId)
     let section = gardenPlan().sections.find(
         s => String(s.id) === String(sectionId)
     )
     selectedSection = section
-    gardenPlan().sections.map(s => console.log(s.id))
     let newBedNum = section.beds.length + 1
     setBedName(`${section.name} ${newBedNum}`)
   }
@@ -69,7 +68,6 @@ function GardenMapEditor () {
 
   }
 
-  onMount(() => console.log('gardenmapeditor is mounted'))
 
   return (
     <dialog attr:open={showGardenMapEditor()}>

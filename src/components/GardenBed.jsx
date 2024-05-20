@@ -1,13 +1,4 @@
-import {
-  For,
-  Show,
-  createEffect,
-  createSignal,
-  on,
-  onCleanup,
-  onMount,
-  useContext
-} from 'solid-js'
+import { Show, createEffect, createSignal, on, useContext } from 'solid-js'
 import './GardenBed.css'
 import { DiaryContext } from '../DiaryContext'
 import { gatherCultureHistory } from '../lib/stores'
@@ -42,7 +33,6 @@ function GardenBed (props) {
     )
   )
 
-  onCleanup(() => console.log('cleanup bed'))
   const returnBed = () => {
     if (bedCommunication.return === true) {
       setBedCommunication('return', props.bed)
@@ -51,7 +41,6 @@ function GardenBed (props) {
   }
 
   createEffect(() => {
-    console.log('bed highlight', bedCommunication.highlight === props.bed.id)
     if (bedCommunication.highlight === props.bed.id) {
       setHighlighted(true)
     } else {

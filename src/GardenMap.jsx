@@ -38,44 +38,12 @@ function GardenMap () {
     let bedObjects = []
     for (let secObj of gardenMapWriter.sectionObjects) {
       for (let bedObj of secObj.bedObjects) {
-        console.log(bedObj)
+
         bedObjects.push(bedObj)
       }
     }
     return bedObjects
   }
-
-  const showHistory = history => {
-    let bedObjects = allBedObjects()
-    bedObjects.map(bedObj => {
-      let bedHistory = history[bedObj.id]
-      if (bedHistory.length) {
-        bedObj.draw()
-        // bedObj.drawInfo(pretty_date(bedHistory[0].date))
-        bedObj.drawInfo(cultureFromId(bedHistory[0].culture))
-      }
-      console.log(bedHistory)
-    })
-    console.log('done')
-  }
-
-  createEffect(
-    on(
-      () => showGardenMap(),
-      () => {
-        if (showGardenMap()) gatherCultureHistory().then(history => null) //showHistory(history))
-      }
-    )
-  )
-  //highlight bed
-  createEffect(() => {
-    if (showGardenMap() && bedCommunication.highlight) {
-      // let bed = gardenMapWriter.getBedById(bedCommunication.highlight)
-      // bed.drawHighlighted()
-    }
-  })
-
-  createEffect(() => console.log('Garden Map: ', gardenPlan(), 'was updated'))
 
   return (
     <dialog attr:open={showGardenMap()}>

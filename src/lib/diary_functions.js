@@ -6,6 +6,13 @@ export function pretty_date(date){
   if (day < 10) day = `0${day}`
   return `${day}.${month}.${date.getFullYear()}`
 }
+export function short_date(date){
+  date = new Date(date)
+  let months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  let m = date.getMonth()
+  let y = String(date.getFullYear())
+  return `${months[m]} ${y.substring(2,4)}`
+}
 
 export function standard_date(date){
   date = new Date(date)

@@ -1,6 +1,7 @@
 import { createSignal } from 'solid-js'
 import localforage from 'localforage'
 import { toastMessage, setToastMessage } from './globals'
+import { pretty_date, short_date } from './diary_functions'
 
 localforage.config({
   name: 'work-diary'
@@ -181,28 +182,29 @@ export function allBedIds () {
   return bedIds
 }
 
-export async function gatherCultureHistory () {
-  let results = {}
-  allBedIds().forEach(id => (results[id] = []))
+export async function gatherCultureHistory (bedId) {
+  let results = []
+  let lookbackTime = 3*365*24*60*60*1000
   diary().forEach(entry => {
     //has bed set
     //has category aussaat or pflanzen/setzen
     if (
-      entry.correspondingBed?.id &&
+      entry.correspondingBed?.id === bedId &&
       (entry.category === 'Aussaat' || entry.category === 'Pflanzen/Setzen') &&
-      entry.culture !== 'none'
+      entry.culture !== 'none' &&
+      Date.now() - entry.date < lookbackTime
     ) {
-      console.log(entry.correspondingBed.id)
-      results[entry.correspondingBed.id].push({
-        date: entry.date,
+      results.push({
+        rawDate: entry.date,
+        date: short_date( entry.date),
         category: entry.category,
-        culture: entry.culture
+        culture: cultureFromId(entry.culture)
       })
     }
-    //get date
+  
   })
-  for (let bed in results) {
-    results[bed] = results[bed].sort((a, b) => b.date - a.date)    
-  }
+
+  results = results.sort((a, b) => b.rawDate - a.rawDate)
+
   return results
 }

@@ -1,0 +1,31 @@
+.bed {
+  
+  background-color: brown;
+  height: 3rem;
+  margin-block: 0.5rem;
+  border-radius: 5px;
+  margin-inline: 0.5rem;
+  padding: 0.5rem;
+}
+.bed-content{
+    display: grid;
+  grid-template-columns: 2fr 2fr 1fr 4fr;
+  gap: 1rem;
+}
+
+.bed-content > * {
+  color: white;
+}
+
+.highlight {
+  background-color: red;
+}
+.history-index{
+    background-color: azure;
+  color: black;
+  padding: 4px 4px;
+  text-align: center;
+  border-radius: 5px;
+  max-height: 2rem;
+    
+}

@@ -1,0 +1,10 @@
+.section{
+    background-color: greenyellow;
+    border-radius: 3px;
+    padding: .5rem;
+    margin-block: 1rem;
+}
+
+.section > *{
+    color: white;
+}

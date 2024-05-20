@@ -146,7 +146,7 @@ function Editor (props) {
 
   //recieve selected Bed from Map
   createEffect(() => {
-    if (bedCommunication.return) {
+    if (bedCommunication.return && bedCommunication.return !== true) {
       let bed = bedCommunication.return
       setBedCommunication('return', null)
       setShowGardenMap(false)
@@ -157,9 +157,8 @@ function Editor (props) {
 
   return (
     <dialog attr:open={showEditor()}>
-      
-        <CulturesEditor />
-      
+      <CulturesEditor />
+
       <article ref={editor}>
         <header>
           <button class='icon-button outline' onclick={() => save()}>
@@ -215,9 +214,12 @@ function Editor (props) {
             value={correspondingBedName()}
             placeholder='no bed selected'
           />
-           <button
+          <button
             class='secondary outline'
-            onclick={() => setShowGardenMap(true)}
+            onclick={() => {
+              setBedCommunication('return', true)
+              setShowGardenMap(true)
+            }}
           >
             <i class='fa-solid fa-location-dot'></i>
           </button>
@@ -245,7 +247,9 @@ function Editor (props) {
               {c => <option value={c.id}>{c.name}</option>}
             </For>
           </select>
-          <button onClick={()=>setShowCulturesEditor(true)}>Add Cultures</button>
+          <button onClick={() => setShowCulturesEditor(true)}>
+            Add Cultures
+          </button>
         </fieldset>
       </article>
     </dialog>

@@ -1,0 +1,14 @@
+#pile{
+    display: grid;
+    grid-template-areas: pile;
+    place-items: center;
+  }
+
+  
+  #pile > *{
+    grid-area: pile;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  

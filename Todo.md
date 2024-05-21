@@ -25,9 +25,9 @@ x make culture persistent
 x save and load diary, gardenPlan and culture Data as one file
 x adjust report to new cultures and gardenPlan
 - gardenMap needs better colors and some eye candy
-- ask periodically via notification if any work was done
-  - needs refinement and trying out
-
+x ask periodically via notification if any work was done
+  x needs refinement and trying out
+- in report show the exact time period (from filter)
 <!--  -->
 ## eventually
 x share reports 

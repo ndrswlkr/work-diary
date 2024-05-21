@@ -1,14 +1,15 @@
-console.log('this message is from your service worker + 1')
+//console.log('this message is from your service worker + 1')
 let done = false
 let timer = null
 self.addEventListener('message', message => {
   //const intervals = message.data.body.data || []
 
   console.log("message recieved")
- //remindDiary()
+ remindDiary()
 })
 
 function remindDiary(){
+  let twoMinutes = 2 * 60 * 1000
   if (timeToAsk()){
     done = true
     self.registration.showNotification('Any work done today', {
@@ -21,21 +22,23 @@ function remindDiary(){
     })
   }
   timer = null
-  timer = setTimeout( ()=>remindDiary(), 10000)
+  timer = setTimeout( ()=>remindDiary(), twoMinutes)
 }
 
 function timeToAsk(){
+  let fiveMinutes = 5*60*1000
+  let threeMinutes = 3 * 60* 1000
   let current = new Date(Date.now())
   let next = new Date(Date.now())
   next.setHours(21)
-  next.setMinutes(51)
+  next.setMinutes(0)
   next.setSeconds(0)
   next.setMilliseconds(0)
 
-  if (next - current < -5*60*1000)
+  if (next - current < -fiveMinutes)
     done = false
     
-    if (done === false && next - current < 0 ) // && next - current > -3000)
+    if (done === false && next - current < 0 && next - current > -threeMinutes)
     return true
   return false
 }

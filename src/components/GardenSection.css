@@ -1,6 +1,7 @@
 .section{
-    background-color: greenyellow;
+    background-color: rgb(27, 154, 5);
     border-radius: 3px;
+    border: 2px solid rgb(133, 227, 56);
     padding: .5rem;
     margin-block: 1rem;
 }

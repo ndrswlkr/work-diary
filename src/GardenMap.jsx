@@ -12,8 +12,11 @@ import GardenMapEditor from './GardenMapEditor'
 import { pretty_date } from './lib/diary_functions'
 import GardenSection from './components/GardenSection'
 import GardenBed from './components/GardenBed'
+import './GardenMap.css'
 
 function GardenMap () {
+  let gardenCanvas
+  let map
   const {
     showGardenMap,
     setShowGardenMap,
@@ -22,15 +25,19 @@ function GardenMap () {
     bedCommunication,
     setBedCommunication
   } = useContext(DiaryContext)
-  let garden
   const bedRef = {}
 
   onMount(() => {
     loadGardenPlan()
     loadCultures()
-    //pointer event
-    /* bed.drawHighlighted()
-    setBedCommunication('return', bed) */
+    gardenCanvas.width = map.clientWidth
+    gardenCanvas.height = map.clientHeight
+    
+    let ctx = gardenCanvas.getContext("2d")
+    ctx.fillStyle = "#000a"
+
+    ctx.fillRect(0,0, gardenCanvas.width, gardenCanvas.height)
+    ctx.fill()
   })
 
   //history
@@ -38,7 +45,6 @@ function GardenMap () {
     let bedObjects = []
     for (let secObj of gardenMapWriter.sectionObjects) {
       for (let bedObj of secObj.bedObjects) {
-
         bedObjects.push(bedObj)
       }
     }
@@ -48,7 +54,13 @@ function GardenMap () {
   return (
     <dialog attr:open={showGardenMap()}>
       <GardenMapEditor />
-      <article style={{ 'min-height': '100vh' }}>
+      <article
+        style={{
+          'min-height': '100vh',
+          'min-width': '100vw',
+          'background-color': 'rgb(239, 215, 178)'
+        }}
+      >
         <header>
           <button
             class='icon-button outline'
@@ -66,16 +78,21 @@ function GardenMap () {
             <strong>Garden Map</strong>
           </span>
         </header>
+        <div id='pile'>
+          <div ref={map} id="map">
 
-        <For each={gardenPlan().sections}>
-          {(section, index) => (
-            <GardenSection section={section}>
-              <For each={gardenPlan().sections[index()].beds}>
-                {bed => <GardenBed highlight={bedCommunication.highlight} ref={bedRef[bed.id]} bed={bed} />}
-              </For>
-            </GardenSection>
-          )}
-        </For>
+          <For each={gardenPlan().sections}>
+            {(section, index) => (
+              <GardenSection section={section}>
+                <For each={gardenPlan().sections[index()].beds}>
+                  {bed => <GardenBed bed={bed} />}
+                </For>
+              </GardenSection>
+            )}
+          </For>
+            </div>
+            <canvas ref={gardenCanvas} id="garden-canvas" />
+        </div>
       </article>
     </dialog>
   )

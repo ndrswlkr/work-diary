@@ -13,9 +13,11 @@ import { pretty_date } from './lib/diary_functions'
 import GardenSection from './components/GardenSection'
 import GardenBed from './components/GardenBed'
 import './GardenMap.css'
+/* import { gardenGlobals, setUpGardenCanvas } from './lib/gardenCanvas'
+import { Gardener } from './lib/gardener' */
 
 function GardenMap () {
-  let gardenCanvas
+  let canvas
   let map
   const {
     showGardenMap,
@@ -25,31 +27,29 @@ function GardenMap () {
     bedCommunication,
     setBedCommunication
   } = useContext(DiaryContext)
-  const bedRef = {}
+ 
 
   onMount(() => {
     loadGardenPlan()
     loadCultures()
-    gardenCanvas.width = map.clientWidth
-    gardenCanvas.height = map.clientHeight
+   // setUpGardenCanvas(canvas, map.clientWidth, map.clientHeight)
     
-    let ctx = gardenCanvas.getContext("2d")
+
+   
+  })
+  /* createEffect(on(()=>showGardenMap(), ()=>{
+    let ctx = gardenGlobals().context
+    console.log("context", ctx)
     ctx.fillStyle = "#000a"
 
-    ctx.fillRect(0,0, gardenCanvas.width, gardenCanvas.height)
+    ctx.fillRect(0,0, canvas.width, canvas.height)
     ctx.fill()
-  })
 
-  //history
-  const allBedObjects = () => {
-    let bedObjects = []
-    for (let secObj of gardenMapWriter.sectionObjects) {
-      for (let bedObj of secObj.bedObjects) {
-        bedObjects.push(bedObj)
-      }
-    }
-    return bedObjects
-  }
+    let gardener = new Gardener()
+    gardener.draw()
+  }))
+  */
+
 
   return (
     <dialog attr:open={showGardenMap()}>
@@ -90,9 +90,9 @@ function GardenMap () {
               </GardenSection>
             )}
           </For>
-            </div>
-            <canvas ref={gardenCanvas} id="garden-canvas" />
-        </div>
+             </div>
+            {/* <canvas ref={canvas} id="garden-canvas" /> */}
+        </div> 
       </article>
     </dialog>
   )

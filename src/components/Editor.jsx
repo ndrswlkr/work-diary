@@ -9,7 +9,7 @@ import {
   createRenderEffect,
   Show
 } from 'solid-js'
-import { epoc_date, neutralNow, standard_date } from '../lib/diary_functions'
+import { epoc_date, neutralNow, pretty_date, standard_date } from '../lib/diary_functions'
 import { diary, loadCultures } from '../lib/stores'
 import { cultures, setCultures } from '../lib/stores'
 import { DiaryContext } from '../DiaryContext'
@@ -35,7 +35,6 @@ function Editor (props) {
   const handleClick = event => {
     if (!showEditor()) return
     if (!editor.contains(event.target) && !showGardenMap) {
-      console.log('here was trigged')
       setShowEditor(false)
     }
   }
@@ -194,6 +193,7 @@ function Editor (props) {
           value={standard_date(entryDate())}
           onChange={e => setEntryDate(epoc_date(e.target.value))}
         />
+        <p>{standard_date(entryDate())}</p>
         <label for='duration'>
           duration <mark>{duration()}</mark>
         </label>

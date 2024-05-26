@@ -31,7 +31,7 @@ export function epoc_date(date){
 
 export function currentDay(){
   let date = new Date(Date.now())
-  let day =  date.getDate() + 1
+  let day =  date.getDate()
   if (day < 10) day = `0${day}`
   return String(day)
 }
@@ -53,6 +53,9 @@ export function lastDayOfMonth(y,m){
 }
 
 export function neutralNow(){
-
-  return epoc_date(new Date(currentYear(), currentMonth(), currentDay()))
+  let date = new Date(Date.now())
+  let d = date.getDate()
+  let m = date.getMonth()
+  let y = date.getFullYear()
+  return epoc_date(new Date(y,m, d))
 }

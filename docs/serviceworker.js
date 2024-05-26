@@ -12,7 +12,7 @@ function remindDiary(){
   let twoMinutes = 2 * 60 * 1000
   if (timeToAsk()){
     done = true
-    self.registration.showNotification('Any work done today', {
+    self.registration.showNotification('Any work done today?', {
       body: `note your work in work-diary`,
       vibrate: [200, 100, 200, 100, 200, 100, 200],
       tag: 'diary-reminder',

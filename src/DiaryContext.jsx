@@ -39,8 +39,8 @@ export function DiaryContextProvider (props) {
           (filter().done === 'pending' && e.done === false)) &&
         (filter().category === 'All' || filter().category === e.category)
     )
-
-    return filtered
+    let sorted = filtered.sort((a,b) => a.date - b.date )
+    return sorted
   }
   const categorys = [
     'Pflege',

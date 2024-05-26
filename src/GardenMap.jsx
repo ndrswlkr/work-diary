@@ -1,4 +1,4 @@
-import { For, createEffect, on, onCleanup, onMount, useContext } from 'solid-js'
+import { For, createEffect, createSignal, on, onCleanup, onMount, useContext } from 'solid-js'
 import { DiaryContext } from './DiaryContext'
 import {
   gardenPlan,
@@ -13,8 +13,8 @@ import { pretty_date } from './lib/diary_functions'
 import GardenSection from './components/GardenSection'
 import GardenBed from './components/GardenBed'
 import './GardenMap.css'
-/* import { gardenGlobals, setUpGardenCanvas } from './lib/gardenCanvas'
-import { Gardener } from './lib/gardener' */
+ import { gardenGlobals, setUpGardenCanvas } from './lib/gardenCanvas'
+import { Gardener } from './lib/gardener' 
 
 function GardenMap () {
   let canvas
@@ -27,29 +27,23 @@ function GardenMap () {
     bedCommunication,
     setBedCommunication
   } = useContext(DiaryContext)
- 
-
+  const [ready, setReady] = createSignal(false)
   onMount(() => {
     loadGardenPlan()
     loadCultures()
-   // setUpGardenCanvas(canvas, map.clientWidth, map.clientHeight)
-    
-
    
   })
-  /* createEffect(on(()=>showGardenMap(), ()=>{
-    let ctx = gardenGlobals().context
-    console.log("context", ctx)
-    ctx.fillStyle = "#000a"
-
-    ctx.fillRect(0,0, canvas.width, canvas.height)
-    ctx.fill()
-
-    let gardener = new Gardener()
-    gardener.draw()
-  }))
-  */
-
+  createEffect(
+    on(
+      () => showGardenMap(),
+      () => {
+        if (showGardenMap() === false ) return
+        setUpGardenCanvas(canvas, map.clientWidth, map.clientHeight)
+        let gardener = new Gardener()
+        gardener.animate()
+      }
+    )
+  )
 
   return (
     <dialog attr:open={showGardenMap()}>
@@ -79,20 +73,22 @@ function GardenMap () {
           </span>
         </header>
         <div id='pile'>
-          <div ref={map} id="map">
+          <div ref={map} id='map'>
+            <For each={gardenPlan().sections}>
+              {(section, index) => (
+                <GardenSection section={section}>
+                  <For each={gardenPlan().sections[index()].beds}>
+                    {bed => <GardenBed bed={bed} />}
+                  </For>
+                </GardenSection>
+              )}
+            </For>
+          </div>
+          <div>
 
-          <For each={gardenPlan().sections}>
-            {(section, index) => (
-              <GardenSection section={section}>
-                <For each={gardenPlan().sections[index()].beds}>
-                  {bed => <GardenBed bed={bed} />}
-                </For>
-              </GardenSection>
-            )}
-          </For>
-             </div>
-            {/* <canvas ref={canvas} id="garden-canvas" /> */}
-        </div> 
+          <canvas ref={canvas} id='garden-canvas' />
+          </div>
+        </div>
       </article>
     </dialog>
   )

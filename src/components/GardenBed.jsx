@@ -52,6 +52,7 @@ function GardenBed (props) {
     <div
       onclick={() => returnBed()}
       class={highlighted() ? 'bed highlight' : 'bed'}
+      id={props.bed.id}
     >
       <div class='bed-content'>
         <h6>{props.bed.name}</h6>

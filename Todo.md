@@ -28,6 +28,8 @@ x adjust report to new cultures and gardenPlan
 x ask periodically via notification if any work was done
   x needs refinement and trying out
 - in report show the exact time period (from filter)
+- gardenPlan mit <Show> aus/einblenden
+
 <!--  -->
 ## eventually
 x share reports 

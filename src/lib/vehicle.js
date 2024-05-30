@@ -16,26 +16,22 @@ export class Vehicle {
     if (this.pos.y >= this.height - this.r) {
       this.pos.y = this.height - this.r
       this.vel.y *= -1
-      console.log("edge")
     }
 
     if (this.pos.x <= 0 + this.r) {
       this.pos.x = this.r
       this.vel.x *= -1
-      console.log("edge")
 
     }
     if (this.pos.x >= this.width - this.r) {
       this.pos.x = this.width - this.r
       this.vel.x *= -1
-      console.log("edge")
 
     }
     if(this.pos.y <= 0 + this.r){
 
       this.pos.y = 0 + this.r
       this.vel.y *= -1
-      console.log("edge")
 
     }
 

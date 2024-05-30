@@ -131,6 +131,15 @@ export function allBedIds () {
   })
   return bedIds
 }
+export function allBeds () {
+  let beds = []
+  gardenPlan().sections.forEach(section => {
+    section.beds.forEach(bed => {
+      beds.push(bed)
+    })
+  })
+  return beds
+}
 
 export async function gatherCultureHistory (bedId) {
   let results = []
